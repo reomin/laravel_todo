@@ -1,0 +1,33 @@
+services:
+  php:
+    build:
+      context: .
+    volumes:
+      - .:/var/www/html # バインドマウント（開発用）
+      # - laravel_vendor:/var/www/html/vendor # ボリュームで永続化
+      # - laravel_cache:/var/www/html/bootstrap/cache # ボリュームで永続化
+    depends_on:
+      - mysql
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "cd project &&
+             php artisan serve --host=0.0.0.0 --port=8000"
+
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: reo
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql # MySQLのデータ永続化
+
+volumes:
+  laravel_vendor: # Laravelの `vendor` ディレクトリを永続化
+  laravel_cache: # キャッシュディレクトリを永続化
+  mysql_data: # MySQLのデータ永続化

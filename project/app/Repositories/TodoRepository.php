@@ -42,11 +42,13 @@ class TodoRepository extends BaseRepository
     }
 
     //ソート機能の実装
-    public function search($sort, $status)
+    public function search($sort, $status, $search_text)
     {
         $query = Todo::query()->where("user_id", Auth::id());
         if (isset($status)) {
             $query->where("status", $status);
+        } else if (isset($search_text)) {
+            $query->where("title", "LIKE", "%$search_text%");
         }
         switch ($sort) {
             case "titleAsc":

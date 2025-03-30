@@ -27,6 +27,14 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div>
+                            <label for="search_title">Title</label>
+                        </div>
+                        <div>
+                            {!! Form::text('search_text', '', ['class' => 'form-control', 'placeholder' => 'キーワードを入力']) !!}
+                        </div>
+                    </div>
                     <div class="form-group col-sm-4">
                         {!! Form::label('status', 'Status') !!}
                         {!! Form::select('status', [null => 'すべて', '0' => '未対応', '1' => '処理中', '2' => '処理済み', '3' => '完了'], $status, ['class' => 'form-control custom-select']) !!}
